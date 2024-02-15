@@ -5,3 +5,7 @@ export async function POST(request: Request) {
   shoppingLists[0].item.push(newItem)
   return new Response(JSON.stringify(newItem))
 }
+
+export async function GET() {
+  return Response.json(shoppingLists)
+}
