@@ -4,7 +4,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { BsHouseDoor } from 'react-icons/bs'
-import { TiTick } from 'react-icons/ti'
+import { CiCircleCheck } from 'react-icons/ci'
 
 export default function Sidebar() {
   const [shoppingLists, setShoppingLists] = useState<ShoppingListType[]>([])
@@ -25,7 +25,7 @@ export default function Sidebar() {
         Home
       </Link>
       <div className="flex justify-center items-center text-4xl mt-4">
-        <TiTick /> My lists
+        <CiCircleCheck /> My lists
       </div>
       <ul className="text-xl list-none">
         {shoppingLists.map((shoppingList: ShoppingListType) => {
