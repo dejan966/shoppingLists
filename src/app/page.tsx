@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>Shopping lists</div>
-    </main>
+    <h1 className="flex justify-center text-4xl w-full min-h-screen bg-white p-24">
+      Shopping lists
+    </h1>
   )
 }
