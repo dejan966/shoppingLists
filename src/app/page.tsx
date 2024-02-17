@@ -27,6 +27,12 @@ export default function Home() {
     }
   }
 
+  const addItem = async () => {
+    const res = await axios.post('api/shoppingLists', {
+      newItem: addItemRef.current!.value,
+    })
+  }
+
   const editItem = async (item: string, id: number, index: number) => {
     const res = await axios.patch(`api/shoppingLists/${id}`, {
       newItem: item,
@@ -34,9 +40,11 @@ export default function Home() {
     })
   }
 
-  const addItem = async () => {
-    const res = await axios.post('api/shoppingLists', {
-      newItem: addItemRef.current!.value,
+  const deleteItem = async (id: number, index: number) => {
+    const res = await axios.delete(`api/shoppingLists/${id}`, {
+      data: {
+        itemIndex: index,
+      },
     })
   }
 
@@ -74,6 +82,9 @@ export default function Home() {
                     <button
                       type="button"
                       className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
+                      onClick={() => {
+                        deleteItem(shoppingList.id, i)
+                      }}
                     >
                       Delete
                     </button>
