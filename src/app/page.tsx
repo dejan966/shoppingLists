@@ -1,19 +1,26 @@
 'use client'
 import ListBlock from '@/components/shoppingLists/ListBlock'
+import { IChecked } from '@/models/itemsChecked'
 import { ShoppingListType } from '@/models/shoppingList'
 import axios from 'axios'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const addItemRef = useRef<HTMLInputElement>(null)
-  const [checked, setChecked] = useState(true)
   const [shoppingLists, setShoppingLists] = useState<ShoppingListType[]>([])
+  const [itemsChecked, setItemsChecked] = useState<IChecked[]>([])
 
   const getShoppingLists = async () => {
     const response = await axios.get('api/shoppingLists')
     setShoppingLists(response.data)
+    for (let i = 0; i < response.data.length; i++) {
+      for (let j = 0; j < response.data[i].item.length; j++) {
+        itemsChecked.push({
+          id: response.data[i].id,
+          checked: response.data[i].item[j].checked,
+        })
+      }
+    }
   }
-
   useEffect(() => {
     getShoppingLists()
   }, [])
@@ -28,9 +35,9 @@ export default function Home() {
     }
   }
 
-  const addItem = async () => {
+  const addItem = async (item: string) => {
     const res = await axios.post('api/shoppingLists', {
-      newItem: addItemRef.current!.value,
+      newItem: item,
     })
   }
 
@@ -49,14 +56,24 @@ export default function Home() {
     })
   }
 
+  const onCheck = async (id: number, itemIndex: number, itemCheck: boolean) => {
+    const res = await axios.post(`api/shoppingLists/check/${id}`, {
+      check: itemCheck,
+      itemIndex: itemIndex,
+    })
+    const itemsCheckedCopy = { ...itemsChecked }
+    itemsCheckedCopy[itemIndex].checked = !itemCheck
+    setItemsChecked(itemsCheckedCopy)
+  }
+
   return (
     <ListBlock
       shoppingLists={shoppingLists}
       edit={edit}
       deleteItem={deleteItem}
       addItem={addItem}
-      checked={checked}
-      setChecked={setChecked}
+      onCheck={onCheck}
+      itemsChecked={itemsChecked}
     />
   )
 }

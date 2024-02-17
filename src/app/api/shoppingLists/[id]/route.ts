@@ -11,7 +11,7 @@ export async function PATCH(
     (shoppingList) => shoppingList.id === parseInt(params.id),
   )
 
-  shoppingLists[index].item[itemIndex] = newItem
+  shoppingLists[index].item[itemIndex].name = newItem
   return Response.json(shoppingLists[index])
 }
 

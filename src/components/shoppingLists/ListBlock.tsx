@@ -1,3 +1,5 @@
+import { ItemType } from '@/models/item'
+import { IChecked } from '@/models/itemsChecked'
 import { ShoppingListType } from '@/models/shoppingList'
 import { useRef } from 'react'
 
@@ -5,9 +7,9 @@ interface Props {
   shoppingLists: ShoppingListType[]
   edit: (event: any, id: number, i: number) => void
   deleteItem: (id: number, index: number) => void
-  addItem: () => void
-  checked: boolean
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>
+  addItem: (item: string) => void
+  onCheck: (id: number, itemIndex: number, itemCheck: boolean) => void
+  itemsChecked: IChecked[]
 }
 
 export default function ListBlock({
@@ -15,8 +17,8 @@ export default function ListBlock({
   edit,
   deleteItem,
   addItem,
-  checked,
-  setChecked,
+  onCheck,
+  itemsChecked,
 }: Props) {
   const addItemRef = useRef<HTMLInputElement>(null)
   return (
@@ -31,25 +33,39 @@ export default function ListBlock({
               key={shoppingList.id}
             >
               <h1 className="text-3xl font-bold">{shoppingList.name}</h1>
-              {shoppingList.item.map((item: any, i: number) => (
+              {shoppingList.item.map((item: ItemType, i: number) => (
                 <div
                   className="text-xl grid grid-flow-col items-center gap-6 space-y-2"
                   key={i}
                 >
                   <input
                     type="checkbox"
+                    defaultChecked={itemsChecked[i].checked}
+                    onChange={() =>
+                      onCheck(shoppingList.id, i, itemsChecked[i].checked)
+                    }
                     className="w-4 h-4 text-xl text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
                   />
-                  <input
-                    type="text"
-                    name="item"
-                    onChange={(event) => {
-                      edit(event, shoppingList.id, i)
-                    }}
-                    defaultValue={item}
-                    className="border-t-0 border-l-0 border-r-0"
-                  />
-                  {checked && (
+                  {itemsChecked[i].checked ? (
+                    <input
+                      type="text"
+                      name="item"
+                      onChange={(event) => {
+                        edit(event, shoppingList.id, i)
+                      }}
+                      defaultValue={item.name}
+                      className="border-t-0 border-l-0 border-r-0"
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      name="item"
+                      defaultValue={item.name}
+                      className="border-t-0 border-l-0 border-r-0"
+                      readOnly
+                    />
+                  )}
+                  {itemsChecked[i].checked && (
                     <button
                       type="button"
                       className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
@@ -74,7 +90,9 @@ export default function ListBlock({
                 <button
                   type="button"
                   className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
-                  onClick={addItem}
+                  onClick={() => {
+                    addItem(addItemRef.current?.value!)
+                  }}
                 >
                   Add
                 </button>
