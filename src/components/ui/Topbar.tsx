@@ -1,7 +1,13 @@
+'use client'
 import { TiTickOutline } from 'react-icons/ti'
 import { CiSearch } from 'react-icons/ci'
+import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Topbar() {
+  const router = useRouter()
+  const searchRef = useRef<HTMLInputElement>(null)
+
   return (
     <header className="px-4 pt-8 pb-4 flex flex-row border items-center justify-between border-solid">
       <div className="flex space-x-6">
@@ -22,9 +28,13 @@ export default function Topbar() {
         <input
           type="text"
           name="searchValue"
+          ref={searchRef}
           className="rounded-xl bg-[#D6DBDC] border-[#D6DBDC] hover:bg-white focus:bg-white"
         />
-        <button className="text-4xl">
+        <button
+          className="text-4xl"
+          onClick={() => router.push(`/search?q=${searchRef.current?.value}`)}
+        >
           <CiSearch />
         </button>
       </div>
