@@ -1,25 +1,12 @@
 'use client'
 import { TiTickOutline } from 'react-icons/ti'
 import { CiSearch } from 'react-icons/ci'
-import axios from 'axios'
+import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Topbar() {
-  const search = async (event: any) => {
-    const timer = setTimeout(async () => {
-      searchItems(event.target.value)
-    }, 2000)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }
-
-  const searchItems = async (searchString: string) => {
-    const res = await axios.post('api/shoppingLists/search', {
-      search: searchString,
-    })
-    console.log(res.data)
-  }
+  const router = useRouter()
+  const searchRef = useRef<HTMLInputElement>(null)
 
   return (
     <header className="px-4 pt-8 pb-4 flex flex-row border items-center justify-between border-solid">
@@ -41,12 +28,13 @@ export default function Topbar() {
         <input
           type="text"
           name="searchValue"
-          onChange={(event) => {
-            search(event)
-          }}
+          ref={searchRef}
           className="rounded-xl bg-[#D6DBDC] border-[#D6DBDC] hover:bg-white focus:bg-white"
         />
-        <button className="text-4xl">
+        <button
+          className="text-4xl"
+          onClick={() => router.push(`/search?q=${searchRef.current?.value}`)}
+        >
           <CiSearch />
         </button>
       </div>
