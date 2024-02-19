@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import path from 'path'
 import { writeFile } from 'fs/promises'
+import { promises as fs, readFile } from 'fs'
 
 export async function POST(req: any, res: any) {
   const formData = await req.formData()
@@ -18,9 +19,14 @@ export async function POST(req: any, res: any) {
       path.join(process.cwd(), 'public/assets/' + filename),
       buffer,
     )
-    return NextResponse.json({ Message: 'Success', status: 201 })
+    const r = await fs.readFile(
+      path.join(process.cwd() + '/public/assets/' + filename),
+      'utf8',
+    )
+    const data = JSON.parse(r)
+    return NextResponse.json({ message: 'Success', data: data, status: 201 })
   } catch (error) {
-    console.log('Error occured ', error)
-    return NextResponse.json({ Message: 'Failed', status: 500 })
+    console.log('Error occured in importing', error)
+    return NextResponse.json({ message: 'Failed', status: 500 })
   }
 }

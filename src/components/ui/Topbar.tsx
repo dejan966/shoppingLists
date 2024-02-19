@@ -1,12 +1,11 @@
 'use client'
 import { TiTickOutline } from 'react-icons/ti'
 import { CiSearch } from 'react-icons/ci'
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
 export default function Topbar() {
-  const [file, setFile] = useState<File | null>(null)
   const router = useRouter()
   const searchRef = useRef<HTMLInputElement>(null)
   const handleFileChange = async ({
@@ -17,7 +16,10 @@ export default function Topbar() {
       const formData = new FormData()
       formData.append('list', myFile)
       const res = await axios.post('api/upload', formData)
-      console.log(res.data)
+      const listRes = await axios.patch('api/shoppingLists', {
+        sL: res.data.data,
+      })
+      console.log(listRes)
     }
   }
 

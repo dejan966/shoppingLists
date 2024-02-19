@@ -43,7 +43,7 @@ export default function Search() {
   }
 
   const addItem = async () => {
-    const res = await axios.post('api/shoppingLists', {
+    const res = await axios.post('api/items', {
       newItem: addItemRef.current!.value,
     })
     setShoppingLists(res.data)

@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     )
     return NextResponse.json({ Message: 'Success', status: 201 })
   } catch (error) {
-    console.log('Error occured ', error)
+    console.log('Error occured in exporting', error)
     return NextResponse.json({ Message: 'Failed', status: 500 })
   }
 }

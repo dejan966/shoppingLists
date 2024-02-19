@@ -1,11 +1,26 @@
+import { ShoppingListType } from '@/models/shoppingList'
 import { shoppingLists } from './data'
-
-export async function POST(request: Request) {
-  const newItem = await request.json()
-  shoppingLists[0].item.push({ name: newItem.newItem, checked: false })
-  return Response.json(shoppingLists)
-}
 
 export async function GET() {
   return Response.json(shoppingLists)
+}
+
+export async function PATCH(request: Request) {
+  const body = await request.json()
+  const { sL } = body
+  sL.map((s: ShoppingListType) => {
+    const index = shoppingLists.findIndex(
+      (shoppingList) => shoppingList.name === s.name,
+    )
+    if (index === -1) {
+      addNewItem(s)
+    } else if (index !== -1) {
+      shoppingLists.splice(index, 1, s)
+    }
+  })
+  return Response.json(shoppingLists)
+}
+
+function addNewItem(newShoppingList: ShoppingListType) {
+  shoppingLists.push(newShoppingList)
 }

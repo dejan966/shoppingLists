@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   const addItem = async (item: string) => {
-    const res = await axios.post('api/shoppingLists', {
+    const res = await axios.post('api/items', {
       newItem: item,
     })
     setShoppingLists(res.data)
