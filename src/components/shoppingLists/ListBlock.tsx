@@ -2,6 +2,7 @@ import { ItemType } from '@/models/item'
 import { IChecked } from '@/models/itemsChecked'
 import { ShoppingListType } from '@/models/shoppingList'
 import { useRef } from 'react'
+import Dropdown from '../ui/Dropdown'
 
 interface Props {
   shoppingLists: ShoppingListType[]
@@ -32,7 +33,10 @@ export default function ListBlock({
               className="text-start border rounded-xl p-4 w-10/11"
               key={shoppingList.id}
             >
-              <h1 className="text-3xl font-bold">{shoppingList.name}</h1>
+              <div className="flex justify-between items-center">
+                <h1 className="text-3xl font-bold">{shoppingList.name}</h1>
+                <Dropdown />
+              </div>
               {shoppingList.item.map((item: ItemType, i: number) => (
                 <div
                   className="text-xl grid grid-flow-col items-center gap-6 space-y-2"
@@ -42,7 +46,7 @@ export default function ListBlock({
                     type="checkbox"
                     defaultChecked={itemsChecked[i]?.checked}
                     onChange={() =>
-                      onCheck(shoppingList.id, i, itemsChecked[i].checked)
+                      onCheck(shoppingList.id, i, itemsChecked[i]?.checked)
                     }
                     className="w-4 h-4 text-xl text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
                   />

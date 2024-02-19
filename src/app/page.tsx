@@ -41,8 +41,8 @@ export default function Home() {
       newItem: item,
     })
     setShoppingLists(res.data)
-    const i = Object.values(itemsChecked) as IChecked[]
-    i.push({ id: res.data[0].id, checked: false })
+    const iC = Object.values(itemsChecked) as IChecked[]
+    iC.push({ id: res.data[0].id, checked: false })
   }
 
   const editItem = async (item: string, id: number, index: number) => {
