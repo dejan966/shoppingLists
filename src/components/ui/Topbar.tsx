@@ -1,13 +1,30 @@
 'use client'
 import { TiTickOutline } from 'react-icons/ti'
 import { CiSearch } from 'react-icons/ci'
-import { useRef } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 export default function Topbar() {
+  const [file, setFile] = useState<File | null>(null)
   const router = useRouter()
   const searchRef = useRef<HTMLInputElement>(null)
-  const importJSON = () => {}
+  const handleFileChange = async ({
+    target,
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (target.files) {
+      const myFile = target.files[0]
+      const formData = new FormData()
+      formData.append('list', myFile)
+      const res = await axios.post('api/upload', formData)
+      console.log(res.data)
+    }
+  }
+
+  const uploadFile = () => {
+    document.getElementById('listUpload')?.click()
+  }
+
   return (
     <header className="px-4 pt-8 pb-4 flex flex-row border items-center justify-between border-solid">
       <div className="flex space-x-6">
@@ -23,13 +40,23 @@ export default function Topbar() {
         >
           + New
         </button>
-        <button
-          className="bg-blue-800 hover:bg-blue-500 text-white rounded-lg text-xl w-20 h-8"
-          type="button"
-          onClick={importJSON}
-        >
-          Import
-        </button>
+        <div>
+          <button
+            className="bg-blue-800 hover:bg-blue-500 text-white rounded-lg text-xl w-20 h-8"
+            type="button"
+            onClick={uploadFile}
+          >
+            Import
+          </button>
+          <input
+            type="file"
+            id="listUpload"
+            name="list"
+            onChange={handleFileChange}
+            accept="application/JSON"
+            className="hidden"
+          />
+        </div>
       </div>
       <div className="flex justify-center items-center">
         <input

@@ -1,8 +1,12 @@
 import { Menu } from '@headlessui/react'
+import axios from 'axios'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 
 export default function Dropdown() {
-  const exportJSON = () => {}
+  const exportJSON = async () => {
+    const response = await axios.get('api/shoppingLists')
+    //write response.data
+  }
   return (
     <Menu>
       <Menu.Button className="text-3xl">
