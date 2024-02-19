@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [shoppingLists, setShoppingLists] = useState<ShoppingListType[]>([])
-  const [itemsChecked, setItemsChecked] = useState<IChecked[]>([])
+  let [itemsChecked, setItemsChecked] = useState<IChecked[]>([])
 
   const getShoppingLists = async () => {
     const response = await axios.get('api/shoppingLists')
@@ -21,6 +21,7 @@ export default function Home() {
       }
     }
   }
+
   useEffect(() => {
     getShoppingLists()
   }, [])
@@ -39,6 +40,9 @@ export default function Home() {
     const res = await axios.post('api/shoppingLists', {
       newItem: item,
     })
+    setShoppingLists(res.data)
+    const i = Object.values(itemsChecked) as IChecked[]
+    i.push({ id: res.data[0].id, checked: false })
   }
 
   const editItem = async (item: string, id: number, index: number) => {
@@ -54,6 +58,8 @@ export default function Home() {
         itemIndex: index,
       },
     })
+    setItemsChecked([])
+    getShoppingLists()
   }
 
   const onCheck = async (id: number, itemIndex: number, itemCheck: boolean) => {

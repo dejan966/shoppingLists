@@ -9,6 +9,7 @@ export async function POST(
   const index = shoppingLists.findIndex(
     (shoppingList) => shoppingList.id === parseInt(params.id),
   )
+
   shoppingLists[index].item[itemIndex].checked = !check
   return new Response(JSON.stringify(shoppingLists[index]))
 }

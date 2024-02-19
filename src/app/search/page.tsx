@@ -46,6 +46,9 @@ export default function Search() {
     const res = await axios.post('api/shoppingLists', {
       newItem: addItemRef.current!.value,
     })
+    setShoppingLists(res.data)
+    const i = Object.values(itemsChecked) as IChecked[]
+    i.push({ id: res.data[0].id, checked: false })
   }
 
   const editItem = async (item: string, id: number, index: number) => {

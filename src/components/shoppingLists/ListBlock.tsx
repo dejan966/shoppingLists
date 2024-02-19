@@ -40,13 +40,13 @@ export default function ListBlock({
                 >
                   <input
                     type="checkbox"
-                    defaultChecked={itemsChecked[i].checked}
+                    defaultChecked={itemsChecked[i]?.checked}
                     onChange={() =>
                       onCheck(shoppingList.id, i, itemsChecked[i].checked)
                     }
                     className="w-4 h-4 text-xl text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
                   />
-                  {itemsChecked[i].checked ? (
+                  {itemsChecked[i]?.checked ? (
                     <input
                       type="text"
                       name="item"
@@ -54,18 +54,18 @@ export default function ListBlock({
                         edit(event, shoppingList.id, i)
                       }}
                       defaultValue={item.name}
-                      className="border-t-0 border-l-0 border-r-0"
+                      className="border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 focus:border-2 focus:border-white focus:border-b-blue-500"
                     />
                   ) : (
                     <input
                       type="text"
                       name="item"
                       defaultValue={item.name}
-                      className="border-t-0 border-l-0 border-r-0"
+                      className="border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 focus:border-2 focus:border-white focus:border-b-blue-500"
                       readOnly
                     />
                   )}
-                  {itemsChecked[i].checked && (
+                  {itemsChecked[i]?.checked && (
                     <button
                       type="button"
                       className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
@@ -85,7 +85,7 @@ export default function ListBlock({
                   id="newItem"
                   ref={addItemRef}
                   placeholder="Add item"
-                  className="w-[17.5rem] border-t-0 border-l-0 border-r-0 hover:border-y-black col-span-2"
+                  className="w-[17.5rem] border-t-0 border-l-0 border-r-0 hover:border-y-black col-span-2 focus:outline-none focus:ring-0 focus:border-2 focus:border-white focus:border-b-blue-500"
                 />
                 <button
                   type="button"
