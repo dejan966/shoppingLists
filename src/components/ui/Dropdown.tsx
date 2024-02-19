@@ -21,7 +21,7 @@ export default function Dropdown({ shoppingList }: Props) {
         <Menu.Item>
           {({ active }) => (
             <p
-              className={`${active && 'text-white bg-blue-500'}`}
+              className={`${active && 'text-white bg-blue-500 rounded-lg'}`}
               onClick={exportJSON}
             >
               Export

@@ -24,13 +24,12 @@ export default function Search() {
         })
       }
     }
+    console.log(res.data)
   }
 
   useEffect(() => {
     searchItems()
   }, [])
-
-  const addItemRef = useRef<HTMLInputElement>(null)
 
   const edit = async (event: any, id: number, i: number) => {
     const timer = setTimeout(async () => {
@@ -42,9 +41,10 @@ export default function Search() {
     }
   }
 
-  const addItem = async () => {
+  const addItem = async (item: string, index: number) => {
     const res = await axios.post('api/items', {
-      newItem: addItemRef.current!.value,
+      newItem: item,
+      shoppingListIndex: index,
     })
     setShoppingLists(res.data)
     const i = Object.values(itemsChecked) as IChecked[]

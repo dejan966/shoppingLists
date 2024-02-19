@@ -8,7 +8,7 @@ interface Props {
   shoppingLists: ShoppingListType[]
   edit: (event: any, id: number, i: number) => void
   deleteItem: (id: number, index: number) => void
-  addItem: (item: string) => void
+  addItem: (item: string, index: number) => void
   onCheck: (id: number, itemIndex: number, itemCheck: boolean) => void
   itemsChecked: IChecked[]
 }
@@ -27,7 +27,7 @@ export default function ListBlock({
       <h1 className="text-4xl">Shopping lists</h1>
       <br />
       <div className="flex justify-center items-center">
-        {shoppingLists.map((shoppingList: ShoppingListType) => {
+        {shoppingLists.map((shoppingList: ShoppingListType, index: number) => {
           return (
             <div
               className="text-start border rounded-xl p-4 w-10/11"
@@ -95,7 +95,7 @@ export default function ListBlock({
                   type="button"
                   className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
                   onClick={() => {
-                    addItem(addItemRef.current?.value!)
+                    addItem(addItemRef.current?.value!, index)
                   }}
                 >
                   Add

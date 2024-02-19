@@ -36,13 +36,15 @@ export default function Home() {
     }
   }
 
-  const addItem = async (item: string) => {
+  const addItem = async (item: string, index: number) => {
     const res = await axios.post('api/items', {
       newItem: item,
+      shoppingListIndex: index,
     })
     setShoppingLists(res.data)
     const iC = Object.values(itemsChecked) as IChecked[]
     iC.push({ id: res.data[0].id, checked: false })
+    console.log(iC)
   }
 
   const editItem = async (item: string, id: number, index: number) => {
