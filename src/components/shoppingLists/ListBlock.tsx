@@ -35,7 +35,7 @@ export default function ListBlock({
             >
               <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">{shoppingList.name}</h1>
-                <Dropdown />
+                <Dropdown shoppingList={shoppingList} />
               </div>
               {shoppingList.item.map((item: ItemType, i: number) => (
                 <div

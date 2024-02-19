@@ -1,11 +1,16 @@
+import { ShoppingListType } from '@/models/shoppingList'
 import { Menu } from '@headlessui/react'
 import axios from 'axios'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 
-export default function Dropdown() {
+interface Props {
+  shoppingList: ShoppingListType
+}
+
+export default function Dropdown({ shoppingList }: Props) {
   const exportJSON = async () => {
-    const response = await axios.get('api/shoppingLists')
-    //write response.data
+    const res = await axios.post('api/export', { shoppingList: shoppingList })
+    console.log(res.data)
   }
   return (
     <Menu>
