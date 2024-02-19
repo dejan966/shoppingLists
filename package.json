@@ -12,6 +12,7 @@
     "check-types": "tsc --pretty --noEmit"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "axios": "^1.6.7",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.2",
