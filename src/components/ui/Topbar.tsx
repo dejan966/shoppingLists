@@ -19,7 +19,6 @@ export default function Topbar() {
       const listRes = await axios.patch('api/shoppingLists', {
         sL: res.data.data,
       })
-      console.log(listRes)
     }
   }
 

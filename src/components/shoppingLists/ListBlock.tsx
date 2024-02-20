@@ -13,6 +13,8 @@ interface Props {
     shoppingListIndex: number,
     itemIndex: number,
     itemCheck: boolean,
+    itemID: number,
+    itemName: string,
   ) => void
 }
 
@@ -49,7 +51,14 @@ export default function ListBlock({
                       type="checkbox"
                       defaultChecked={item.checked}
                       onChange={() =>
-                        onCheck(shoppingList.id, index, i, item.checked)
+                        onCheck(
+                          shoppingList.id,
+                          index,
+                          i,
+                          item.checked,
+                          item.id,
+                          item.name,
+                        )
                       }
                       className="w-4 h-4 text-xl text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600"
                     />

@@ -43,7 +43,7 @@ export default function Search() {
   }
 
   const editItem = async (item: string, id: number, index: number) => {
-    const res = await axios.patch(`api/shoppingLists/${id}`, {
+    const res = await axios.patch(`api/items/${id}`, {
       newItem: item,
       itemIndex: index,
     })
@@ -62,14 +62,18 @@ export default function Search() {
     shoppingListIndex: number,
     itemIndex: number,
     itemCheck: boolean,
+    itemID: number,
+    itemName: string,
   ) => {
-    /* const res = await axios.post(`api/shoppingLists/check/${id}`, {
+    const res = await axios.patch(`api/items/check/${id}`, {
       check: itemCheck,
       itemIndex: itemIndex,
-    }) */
+      itemID: itemID,
+      itemName: itemName,
+    })
+
     const shoppingListCopy = { ...shoppingLists }
     shoppingListCopy[shoppingListIndex].item[itemIndex].checked = !itemCheck
-    console.log(shoppingListCopy)
     setShoppingLists(shoppingListCopy)
   }
 

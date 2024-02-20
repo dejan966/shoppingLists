@@ -5,13 +5,13 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   const body = await request.json()
-  const { newItem, itemIndex } = body
+  const { newName } = body
 
   const index = shoppingLists.findIndex(
     (shoppingList) => shoppingList.id === parseInt(params.id),
   )
 
-  shoppingLists[index].item[itemIndex].name = newItem
+  shoppingLists[index].name = newName
   return Response.json(shoppingLists[index])
 }
 

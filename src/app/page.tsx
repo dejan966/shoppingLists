@@ -55,15 +55,18 @@ export default function Home() {
     shoppingListIndex: number,
     itemIndex: number,
     itemCheck: boolean,
+    itemID: number,
+    itemName: string,
   ) => {
-    const res = await axios.post(`api/shoppingLists/check/${id}`, {
+    const res = await axios.patch(`api/items/check/${id}`, {
       check: itemCheck,
       itemIndex: itemIndex,
+      itemID: itemID,
+      itemName: itemName,
     })
 
     const shoppingListCopy = { ...shoppingLists }
     shoppingListCopy[shoppingListIndex].item[itemIndex].checked = !itemCheck
-    console.log(shoppingListCopy)
     setShoppingLists(shoppingListCopy)
   }
 
