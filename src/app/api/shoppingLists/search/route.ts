@@ -1,13 +1,19 @@
 import { NextRequest } from 'next/server'
 import { shoppingLists } from '../data'
+import { ShoppingListType } from '@/models/shoppingList'
 
 export async function GET(nextRequest: NextRequest) {
   const searchParams = nextRequest.nextUrl.searchParams
   const query = searchParams.get('q')
-  const filteredLists = query
-    ? shoppingLists.filter((shoppingList) => {
-        return shoppingList.item.toString().indexOf(query) >= 0
-      })
-    : null
+  const filteredLists: ShoppingListType[] = []
+  if (query !== '') {
+    shoppingLists.filter((shoppingList, i) => {
+      shoppingList.item.filter(
+        (item) =>
+          item.name.includes(query as string) &&
+          filteredLists.push(shoppingLists[i]),
+      )
+    })
+  }
   return Response.json(filteredLists)
 }

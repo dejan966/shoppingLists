@@ -15,6 +15,10 @@ export default function Search() {
 
   const searchItems = async () => {
     const res = await axios.get(`api/shoppingLists/search?q=${search}`)
+    console.log(res.data)
+    if (res.data === null) {
+      return
+    }
     setShoppingLists(res.data)
     for (let i = 0; i < res.data.length; i++) {
       for (let j = 0; j < res.data[i].item.length; j++) {
@@ -24,7 +28,6 @@ export default function Search() {
         })
       }
     }
-    console.log(res.data)
   }
 
   useEffect(() => {

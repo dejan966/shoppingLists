@@ -27,7 +27,7 @@ export default function ListBlock({
       <h1 className="text-4xl">Shopping lists</h1>
       <br />
       <div className="flex justify-center items-center">
-        {shoppingLists.map((shoppingList: ShoppingListType, index: number) => {
+        {shoppingLists?.map((shoppingList: ShoppingListType, index: number) => {
           return (
             <div
               className="text-start border rounded-xl p-4 w-10/11"

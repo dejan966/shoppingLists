@@ -36,12 +36,6 @@ export default function Topbar() {
         >
           <TiTickOutline />
         </button>
-        <button
-          className="bg-blue-800 hover:bg-blue-500 text-white rounded-lg text-xl w-20 h-8"
-          type="button"
-        >
-          + New
-        </button>
         <div>
           <button
             className="bg-blue-800 hover:bg-blue-500 text-white rounded-lg text-xl w-20 h-8"
