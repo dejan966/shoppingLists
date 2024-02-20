@@ -1,25 +1,15 @@
 'use client'
 import ListBlock from '@/components/shoppingLists/ListBlock'
-import { IChecked } from '@/models/itemsChecked'
 import { ShoppingListType } from '@/models/shoppingList'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [shoppingLists, setShoppingLists] = useState<ShoppingListType[]>([])
-  let [itemsChecked, setItemsChecked] = useState<IChecked[]>([])
 
   const getShoppingLists = async () => {
     const response = await axios.get('api/shoppingLists')
     setShoppingLists(response.data)
-    for (let i = 0; i < response.data.length; i++) {
-      for (let j = 0; j < response.data[i].item.length; j++) {
-        itemsChecked.push({
-          id: response.data[i].id,
-          checked: response.data[i].item[j].checked,
-        })
-      }
-    }
   }
 
   useEffect(() => {
@@ -41,9 +31,7 @@ export default function Home() {
       newItem: item,
       shoppingListIndex: index,
     })
-    setShoppingLists(res.data)
-    const iC = Object.values(itemsChecked) as IChecked[]
-    iC.push({ id: res.data[0].id, checked: false })
+    getShoppingLists()
   }
 
   const editItem = async (item: string, id: number, index: number) => {
@@ -59,18 +47,24 @@ export default function Home() {
         itemIndex: index,
       },
     })
-    setItemsChecked([])
     getShoppingLists()
   }
 
-  const onCheck = async (id: number, itemIndex: number, itemCheck: boolean) => {
+  const onCheck = async (
+    id: number,
+    shoppingListIndex: number,
+    itemIndex: number,
+    itemCheck: boolean,
+  ) => {
     const res = await axios.post(`api/shoppingLists/check/${id}`, {
       check: itemCheck,
       itemIndex: itemIndex,
     })
-    const itemsCheckedCopy = { ...itemsChecked }
-    itemsCheckedCopy[itemIndex].checked = !itemCheck
-    setItemsChecked(itemsCheckedCopy)
+
+    const shoppingListCopy = { ...shoppingLists }
+    shoppingListCopy[shoppingListIndex].item[itemIndex].checked = !itemCheck
+    console.log(shoppingListCopy)
+    setShoppingLists(shoppingListCopy)
   }
 
   return (
@@ -80,7 +74,6 @@ export default function Home() {
       deleteItem={deleteItem}
       addItem={addItem}
       onCheck={onCheck}
-      itemsChecked={itemsChecked}
     />
   )
 }

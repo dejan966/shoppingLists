@@ -1,5 +1,5 @@
 import { ShoppingListType } from '@/models/shoppingList'
-import { shoppingLists } from './data'
+import { shoppingLists } from '../data'
 
 export async function GET() {
   return Response.json(shoppingLists)
@@ -13,7 +13,7 @@ export async function PATCH(request: Request) {
       (shoppingList) => shoppingList.name === s.name,
     )
     if (index === -1) {
-      addNewItem(s)
+      addNewList(s)
     } else if (index !== -1) {
       shoppingLists.splice(index, 1, s)
     }
@@ -21,6 +21,6 @@ export async function PATCH(request: Request) {
   return Response.json(shoppingLists)
 }
 
-function addNewItem(newShoppingList: ShoppingListType) {
+function addNewList(newShoppingList: ShoppingListType) {
   shoppingLists.push(newShoppingList)
 }

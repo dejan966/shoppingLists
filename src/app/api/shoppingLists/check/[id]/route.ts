@@ -1,4 +1,4 @@
-import { shoppingLists } from '../../data'
+import { shoppingLists } from '../../../data'
 
 export async function POST(
   request: Request,

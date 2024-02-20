@@ -1,4 +1,4 @@
-import { shoppingLists } from '../shoppingLists/data'
+import { shoppingLists } from '../data'
 
 export async function POST(request: Request) {
   const body = await request.json()
