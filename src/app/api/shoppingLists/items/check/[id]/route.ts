@@ -17,7 +17,7 @@ export async function PATCH(
   )
 
   if (iIndex === -1) {
-    const r = JSON.stringify({ newItem: itemName, shoppingListIndex: index })
+    const r = JSON.stringify({ name: itemName, shoppingListIndex: index })
     const itemPost = await POST(
       new Request('http://localhost:3000', {
         method: 'POST',

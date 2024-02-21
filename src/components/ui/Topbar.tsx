@@ -1,13 +1,20 @@
 'use client'
 import { TiTickOutline } from 'react-icons/ti'
 import { CiSearch } from 'react-icons/ci'
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
 export default function Topbar() {
   const router = useRouter()
-  const searchRef = useRef<HTMLInputElement>(null)
+  const [searchValue, setSearchValue] = useState('')
+
+  const searching = () => {
+    if (searchValue !== '') {
+      router.push(`/search?q=${searchValue}`)
+      setSearchValue('')
+    }
+  }
   const handleFileChange = async ({
     target,
   }: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +34,7 @@ export default function Topbar() {
   }
 
   return (
-    <header className="px-4 pt-8 pb-4 flex flex-row border items-center justify-between border-solid">
+    <header className="px-4 pt-8 pb-4 flex border items-center justify-between border-solid">
       <div className="flex space-x-6">
         <button
           className="bg-blue-800 text-white rounded-lg text-xl w-20 h-8"
@@ -57,13 +64,15 @@ export default function Topbar() {
         <input
           type="text"
           name="searchValue"
-          ref={searchRef}
+          id="searchValue"
+          value={searchValue}
+          onChange={(event) => {
+            setSearchValue(event.target.value)
+          }}
+          placeholder="Search"
           className="rounded-xl bg-[#D6DBDC] border-[#D6DBDC] hover:bg-white focus:bg-white"
         />
-        <button
-          className="text-4xl"
-          onClick={() => router.push(`/search?q=${searchRef.current?.value}`)}
-        >
+        <button className="text-4xl" onClick={searching}>
           <CiSearch />
         </button>
       </div>

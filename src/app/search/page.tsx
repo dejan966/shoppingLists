@@ -35,7 +35,7 @@ export default function Search() {
   }
 
   const addItem = async (item: string, index: number) => {
-    const res = await axios.post('api/items', {
+    const res = await axios.post('api/shoppingLists/items', {
       newItem: item,
       shoppingListIndex: index,
     })
@@ -43,16 +43,16 @@ export default function Search() {
   }
 
   const editItem = async (item: string, id: number, index: number) => {
-    const res = await axios.patch(`api/items/${id}`, {
+    const res = await axios.patch(`api/shoppingLists/items/${id}`, {
       newItem: item,
       itemIndex: index,
     })
   }
 
-  const deleteItem = async (id: number, index: number) => {
-    const res = await axios.delete(`api/shoppingLists/${id}`, {
+  const deleteItem = async (id: number, itemId: number) => {
+    const res = await axios.delete(`api/shoppingLists/items/${id}`, {
       data: {
-        itemIndex: index,
+        itemId: itemId,
       },
     })
   }
@@ -65,7 +65,7 @@ export default function Search() {
     itemID: number,
     itemName: string,
   ) => {
-    const res = await axios.patch(`api/items/check/${id}`, {
+    const res = await axios.patch(`api/items/shoppingLists/check/${id}`, {
       check: itemCheck,
       itemIndex: itemIndex,
       itemID: itemID,

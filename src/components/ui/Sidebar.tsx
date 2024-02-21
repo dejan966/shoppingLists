@@ -19,7 +19,7 @@ export default function Sidebar() {
   }, [])
 
   return (
-    <div className="h-screen w-80 px-4 pt-8 pb-4 text-center flex-col border border-solid">
+    <div className="h-full w-80 px-4 pt-8 pb-4 text-center flex-col border border-solid">
       <Link href="/" className="flex justify-center items-center text-4xl">
         <BsHouseDoor />
         Home

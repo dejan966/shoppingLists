@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { shoppingLists } from '../../data'
+import { shoppingLists } from '../data'
 import { ShoppingListType } from '@/models/shoppingList'
 
 export async function GET(nextRequest: NextRequest) {

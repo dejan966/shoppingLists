@@ -16,9 +16,9 @@ export default function Home() {
     getShoppingLists()
   }, [])
 
-  const edit = async (event: any, id: number, i: number) => {
+  const edit = async (event: any, itemId: number, shoppingListId: number) => {
     const timer = setTimeout(async () => {
-      editItem(event.target.value, id, i)
+      editItem(event.target.value, itemId, shoppingListId)
     }, 2000)
 
     return () => {
@@ -27,24 +27,29 @@ export default function Home() {
   }
 
   const addItem = async (item: string, index: number) => {
-    const res = await axios.post('api/items', {
-      newItem: item,
+    const res = await axios.post('api/shoppingLists/items', {
+      name: item,
       shoppingListIndex: index,
     })
     getShoppingLists()
   }
 
-  const editItem = async (item: string, id: number, index: number) => {
-    const res = await axios.patch(`api/shoppingLists/${id}`, {
-      newItem: item,
-      itemIndex: index,
+  const editItem = async (
+    item: string,
+    itemid: number,
+    shoppingListId: number,
+  ) => {
+    const res = await axios.patch(`api/shoppingLists/items/${itemid}`, {
+      name: item,
+      shoppingListId: shoppingListId,
     })
   }
 
-  const deleteItem = async (id: number, index: number) => {
-    const res = await axios.delete(`api/shoppingLists/${id}`, {
+  const deleteItem = async (i: number, itemId: number, name: string) => {
+    const res = await axios.delete(`api/shoppingLists/items/${itemId}`, {
       data: {
-        itemIndex: index,
+        name: name,
+        index: i,
       },
     })
     getShoppingLists()
@@ -58,7 +63,7 @@ export default function Home() {
     itemID: number,
     itemName: string,
   ) => {
-    const res = await axios.patch(`api/items/check/${id}`, {
+    const res = await axios.patch(`api/shoppingLists/items/check/${id}`, {
       check: itemCheck,
       itemIndex: itemIndex,
       itemID: itemID,

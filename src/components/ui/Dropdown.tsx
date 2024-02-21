@@ -10,7 +10,6 @@ interface Props {
 export default function Dropdown({ shoppingList }: Props) {
   const exportJSON = async () => {
     const res = await axios.post('api/export', { shoppingList: shoppingList })
-    console.log(res.data)
   }
   return (
     <Menu>

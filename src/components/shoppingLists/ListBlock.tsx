@@ -1,12 +1,12 @@
 import { ItemType } from '@/models/item'
 import { ShoppingListType } from '@/models/shoppingList'
-import { useRef } from 'react'
+import { useState } from 'react'
 import Dropdown from '../ui/Dropdown'
 
 interface Props {
   shoppingLists: ShoppingListType[]
-  edit: (event: any, id: number, i: number) => void
-  deleteItem: (id: number, index: number) => void
+  edit: (event: any, itemId: number, shoppingListId: number) => void
+  deleteItem: (i: number, itemId: number, name: string) => void
   addItem: (item: string, index: number) => void
   onCheck: (
     id: number,
@@ -25,9 +25,9 @@ export default function ListBlock({
   addItem,
   onCheck,
 }: Props) {
-  const addItemRef = useRef<HTMLInputElement>(null)
+  const [itemValue, setItemValue] = useState('')
   return (
-    <div className="text-center w-full min-h-screen bg-white p-24">
+    <div className="text-center w-full h-full bg-white p-24">
       <h1 className="text-4xl">Shopping lists</h1>
       <br />
       <div className="flex justify-center items-center">
@@ -67,7 +67,7 @@ export default function ListBlock({
                         type="text"
                         name="item"
                         onChange={(event) => {
-                          edit(event, shoppingList.id, i)
+                          edit(event, item.id, shoppingList.id)
                         }}
                         defaultValue={item.name}
                         className="border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 focus:border-2 focus:border-white focus:border-b-blue-500"
@@ -86,7 +86,7 @@ export default function ListBlock({
                         type="button"
                         className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
                         onClick={() => {
-                          deleteItem(shoppingList.id, i)
+                          deleteItem(index, item.id, item.name)
                         }}
                       >
                         Delete
@@ -99,7 +99,10 @@ export default function ListBlock({
                     type="text"
                     name="newItem"
                     id="newItem"
-                    ref={addItemRef}
+                    value={itemValue}
+                    onChange={(event) => {
+                      setItemValue(event.target.value)
+                    }}
                     placeholder="Add item"
                     className="w-[17.5rem] border-t-0 border-l-0 border-r-0 hover:border-y-black col-span-2 focus:outline-none focus:ring-0 focus:border-2 focus:border-white focus:border-b-blue-500"
                   />
@@ -107,7 +110,8 @@ export default function ListBlock({
                     type="button"
                     className="w-20 h-12 text-sm text-white bg-blue-800 hover:bg-blue-500 rounded-lg"
                     onClick={() => {
-                      addItem(addItemRef.current?.value!, index)
+                      addItem(itemValue, index)
+                      setItemValue('')
                     }}
                   >
                     Add
